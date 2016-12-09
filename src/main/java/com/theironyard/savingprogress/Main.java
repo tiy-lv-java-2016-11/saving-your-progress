@@ -13,23 +13,25 @@ import java.util.Scanner;
  * Created by darionmoore on 12/8/16.
  */
 public class Main {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
 
             Scanner input = new Scanner(System.in);
             File file = new File("Hoodie.json");
-
+        try {
             Scanner scanner = new Scanner(file);
             scanner.useDelimiter("\\Z");
             String contents = scanner.next();
             JsonParser parser = new JsonParser();
             Hoodie newHoodie = parser.parse(contents, Hoodie.class);
             System.out.println(contents);
-
-            System.out.println("Would you like to change your selection?");
-            boolean run = true;
-            String options = input.nextLine();
-            while (run) {
-                if (options.equalsIgnoreCase("yes")) {
+        } catch (FileNotFoundException e){
+            System.out.println("No such file found, we will have to recreate your hoodie!");
+        }
+        System.out.println("Would you like to change your selection?");
+        boolean run = true;
+        String options = input.nextLine();
+        while (run) {
+            if (options.equalsIgnoreCase("yes")) {
                     Hoodie hoodie = new Hoodie();
                     System.out.println("What size hoodie? \n");
                     hoodie.setSize();
@@ -48,14 +50,13 @@ public class Main {
                     System.out.println("Alright then, thank you for your choices! Have a nice day!");
                     fw.close();
                     run = false;
-                } else if (options.equalsIgnoreCase("no")) {
+            } else if (options.equalsIgnoreCase("no")) {
                     System.out.println("Alright then, thank you for your choices! Have a nice day!");
                     run = false;
 
 
           }
         }
-
 
     }
 
